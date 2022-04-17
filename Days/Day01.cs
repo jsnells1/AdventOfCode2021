@@ -2,17 +2,16 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace AdventOfCode.Days
 {
-    class Day01 : BaseDay
+    class Day01 : Day
     {
         public readonly int[] input;
 
         public Day01()
         {
-            input = File.ReadAllText(InputFilePath).Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
+            input = base.SplitInput().Select(int.Parse).ToArray();
         }
 
         public override string Solve_1()
