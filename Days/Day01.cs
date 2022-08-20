@@ -1,57 +1,53 @@
-﻿using AoCHelper;
-using System;
-using System.IO;
-using System.Linq;
+﻿using System.Linq;
 
-namespace AdventOfCode.Days
+namespace AdventOfCode.Days;
+
+class Day01 : Day
 {
-    class Day01 : Day
+    public readonly int[] input;
+
+    public Day01()
     {
-        public readonly int[] input;
+        input = base.SplitInput().Select(int.Parse).ToArray();
+    }
 
-        public Day01()
+    public override string Solve_1()
+    {
+        int prev = int.MaxValue;
+        int c = 0;
+
+        foreach (int val in input)
         {
-            input = base.SplitInput().Select(int.Parse).ToArray();
-        }
-
-        public override string Solve_1()
-        {
-            int prev = int.MaxValue;
-            int c = 0;
-
-            foreach (int val in input)
+            if (val > prev)
             {
-                if (val > prev)
-                {
-                    c++;
-                }
-
-                prev = val;
+                c++;
             }
 
-            return c.ToString();
+            prev = val;
         }
 
-        public override string Solve_2()
+        return c.ToString();
+    }
+
+    public override string Solve_2()
+    {
+        int index = 0;
+        int prev = int.MaxValue;
+        int c = 0;
+
+        while (index <= input.Length - 3)
         {
-            int index = 0;
-            int prev = int.MaxValue;
-            int c = 0;
+            var sum = input[index..(index + 3)].Sum();
 
-            while (index <= input.Length - 3)
+            if (sum > prev)
             {
-                var sum = input[index..(index + 3)].Sum();
-
-                if (sum > prev)
-                {
-                    c++;
-                }
-
-                prev = sum;
-                index++;
+                c++;
             }
 
-            return c.ToString();
+            prev = sum;
+            index++;
         }
+
+        return c.ToString();
     }
 }

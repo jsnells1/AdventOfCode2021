@@ -1,12 +1,12 @@
 ﻿using AoCHelper;
 
-namespace AdventOfCode
+namespace AdventOfCode;
+
+class Program
 {
-    class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
-        {
-            Solver.SolveLast();
-        }
+        Solver.SolveLast();
     }
 }
+
