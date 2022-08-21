@@ -5,24 +5,25 @@ namespace AdventOfCode.Days;
 
 class Day04 : Day
 {
+    string[] raw;
     string[] numbers;
-    List<Board> boards;
 
     public Day04()
     {
-        var raw = SplitInput("\r\n\r\n");
+        raw = SplitInput("\r\n\r\n");
 
         numbers = raw[0].Split(',').ToArray();
-        boards = raw[1..].Select(x => new Board(x)).ToList();
     }
 
     public override string Solve_1()
     {
+        List<Board> boards = raw[1..].Select(x => new Board(x)).ToList();
+
         foreach (string num in numbers)
         {
             boards.ForEach(x => x.Mark(num));
 
-            var winningBoard = boards.FirstOrDefault(x => x.HasWon());
+            var winningBoard = boards.FirstOrDefault(x => x.HasWon);
 
             if (winningBoard != null)
             {
@@ -35,8 +36,7 @@ class Day04 : Day
 
     public override string Solve_2()
     {
-        var raw = SplitInput("\r\n\r\n");
-        boards = raw[1..].Select(x => new Board(x)).ToList();
+        List<Board> boards = raw[1..].Select(x => new Board(x)).ToList();
 
         foreach (string num in numbers)
         {
@@ -44,14 +44,14 @@ class Day04 : Day
 
             if (boards.Count == 1)
             {
-                if (boards.First().HasWon())
+                if (boards.First().HasWon)
                 {
                     return (boards.First().Score() * int.Parse(num)).ToString();
                 }
             }
             else
             {
-                boards.RemoveAll(x => x.HasWon());
+                boards.RemoveAll(x => x.HasWon);
             }
         }
 
@@ -61,6 +61,26 @@ class Day04 : Day
     private class Board
     {
         private (string, bool)[][] board;
+
+        public bool HasWon
+        {
+            get
+            {
+                var won = board.Any(x => x.All(y => y.Item2));
+
+                if (won)
+                    return won;
+
+                for (int i = 0; i < board.Length; i++)
+                {
+                    won = board.All(x => x[i].Item2);
+                    if (won)
+                        return won;
+                }
+
+                return false;
+            }
+        }
 
         public Board(string input)
         {
@@ -80,23 +100,6 @@ class Day04 : Day
                     }
                 }
             }
-        }
-
-        public bool HasWon()
-        {
-            var won = board.Any(x => x.All(y => y.Item2));
-
-            if (won)
-                return won;
-
-            for (int i = 0; i < board.Length; i++)
-            {
-                won = board.All(x => x[i].Item2);
-                if (won)
-                    return won;
-            }
-
-            return false;
         }
 
         public int Score()
