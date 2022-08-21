@@ -1,6 +1,5 @@
-﻿using AoCHelper;
-using System;
-using System.IO;
+﻿using System.IO;
+using AoCHelper;
 
 namespace AdventOfCode.Days;
 
@@ -15,6 +14,6 @@ public abstract class Day : BaseDay
 
     public string[] SplitInput(string seperator = "\r\n")
     {
-        return InputText.Split(new[] { seperator }, StringSplitOptions.RemoveEmptyEntries);
+        return InputText.SplitRemoveEmptyEntries(seperator);
     }
 }
